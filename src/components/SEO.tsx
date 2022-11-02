@@ -5,9 +5,11 @@ interface SEOProps {
 }
 
 export default function SEO({ title }: SEOProps) {
+  const myTitle = `${title} | Amazon`;
+
   return (
     <Head>
-      <title>{title} | Amazon</title>
+      <title>{myTitle}</title>
       <meta name="description" content="Amazon" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
