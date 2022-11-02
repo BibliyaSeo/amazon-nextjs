@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { HiOutlineSearch, HiOutlineShoppingCart, HiOutlineMenu } from "react-icons/hi";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Header() {
   return (
@@ -30,7 +31,7 @@ export default function Header() {
           className=" text-white flex items-center text-xs 
           space-x-6 mx-6 whitespace-nowrap"
         >
-          <div className="link">
+          <div className="link" onClick={() => signIn()}>
             <p>Hello Seongkyeong</p>
             <p className="font-extrabold md:text-sm">Account & Lists</p>
           </div>
