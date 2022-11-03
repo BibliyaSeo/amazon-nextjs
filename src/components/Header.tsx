@@ -3,6 +3,8 @@ import { HiOutlineSearch, HiOutlineShoppingCart, HiOutlineMenu } from "react-ico
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Header() {
+  const { data: session }: any = useSession();
+
   return (
     <header>
       {/* top */}
@@ -32,7 +34,7 @@ export default function Header() {
           space-x-6 mx-6 whitespace-nowrap"
         >
           <div className="link" onClick={() => signIn()}>
-            <p>Hello Seongkyeong</p>
+            <p>{session ? `Hello, ${session.user.name}` : "Sign In"}</p>
             <p className="font-extrabold md:text-sm">Account & Lists</p>
           </div>
           <div className="link">
@@ -49,6 +51,9 @@ export default function Header() {
             </span>
             <HiOutlineShoppingCart className="text-4xl" />
             <p className="hidden md:inline font-extrabold md:text-sm mt-2">Basket</p>
+          </div>
+          <div className="link" onClick={() => signOut()}>
+            <p className={session ? "inline" : "hidden"}>Sign Out</p>
           </div>
         </div>
       </div>
