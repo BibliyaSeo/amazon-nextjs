@@ -1,9 +1,14 @@
 import Image from "next/image";
 import { HiOutlineSearch, HiOutlineShoppingCart, HiOutlineMenu } from "react-icons/hi";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { selectItems } from "../slices/basketSlice";
 
 export default function Header() {
   const { data: session }: any = useSession();
+  const router = useRouter();
+  const items = useSelector(selectItems);
 
   return (
     <header>
@@ -11,6 +16,7 @@ export default function Header() {
       <div className="flex items-center bg-amazon_blue p-1 flex-grow">
         <div className="mt-2 flex items-center flex-grow sm:flex-grow-0 mx-6">
           <Image
+            onClick={() => router.push("/")}
             src={"https://links.papareact.com/f90"}
             width={150}
             height={40}
@@ -33,7 +39,7 @@ export default function Header() {
           className=" text-white flex items-center text-xs 
           space-x-6 mx-6 whitespace-nowrap"
         >
-          <div className="link" onClick={() => signIn()}>
+          <div className="link" onClick={!session ? () => signIn() : () => signOut()}>
             <p>{session ? `Hello, ${session.user.name}` : "Sign In"}</p>
             <p className="font-extrabold md:text-sm">Account & Lists</p>
           </div>
@@ -41,19 +47,16 @@ export default function Header() {
             <p>Returns</p>
             <p className="font-extrabold md:text-sm">& Orders</p>
           </div>
-          <div className="relative flex items-center link">
+          <div className="relative flex items-center link" onClick={() => router.push("/checkout")}>
             <span
               className="absolute top-0 right-0 md:right-10 
               h-4 w-5 bg-yellow-400 text-center rounded-full 
               text-black font-bold"
             >
-              0
+              {items.length}
             </span>
             <HiOutlineShoppingCart className="text-4xl" />
             <p className="hidden md:inline font-extrabold md:text-sm mt-2">Basket</p>
-          </div>
-          <div className="link" onClick={() => signOut()}>
-            <p className={session ? "inline" : "hidden"}>Sign Out</p>
           </div>
         </div>
       </div>
