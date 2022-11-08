@@ -18,8 +18,8 @@ export default function Orders({ orders }: any) {
 
         {session ? <h2>x Orders</h2> : <h2>Please sign in to see your orders. </h2>}
         <div className="mt-5 space-y-4">
-          {/* {orders?.map(() => (
-            <Order />
+          {/* {[orders]?.map((item, idx) => (
+            <Order key={idx} />
           ))} */}
         </div>
       </main>
@@ -37,27 +37,27 @@ export async function getServerSideProps(context: any) {
     };
   }
 
-  //   const stripeOrders = await db
-  //     .collection("users")
-  //     .doc(session.user.email)
-  //     .collection("orders")
-  //     .orderBy("timestamp", "desc")
-  //     .get();
+  // const stripeOrders = await db
+  //   .collection("users")
+  //   .doc(session.user.email)
+  //   .collection("orders")
+  //   .orderBy("timestamp", "desc")
+  //   .get();
 
-  //   const orders = await Promise.all(
-  //     orderSnap.docs.map(async (order: any) => ({
-  //       id: order.indexOf,
-  //       amount: order.data().amount,
-  //       amountShipping: order.data().amount_shipping,
-  //       images: order.data().images,
-  //       timestamp: moment(order.data().timestamp.toDate()).unix(),
-  //       items: (
-  //         await stripe.checkout.session.listLineItems(order.id, {
-  //           limit: 100,
-  //         })
-  //       ).data,
-  //     }))
-  //   );
+  // const orders = await Promise.all(
+  //   stripeOrders.docs.map(async (order: any) => ({
+  //     id: order.indexOf,
+  //     amount: order.data().amount,
+  //     amountShipping: order.data().amount_shipping,
+  //     images: order.data().images,
+  //     timestamp: moment(order.data().timestamp.toDate()).unix(),
+  //     items: (
+  //       await stripe.checkout.session.listLineItems(order.id, {
+  //         limit: 100,
+  //       })
+  //     ).data,
+  //   }))
+  // );
 
   const orderRef = collection(db, "user", session.user.email, "orders");
   const orderQuery = query(orderRef, orderBy("timestamp", "desc"));
