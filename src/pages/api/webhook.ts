@@ -17,11 +17,12 @@ const fulfillOrder = async (session: any) => {
   console.log("Fulfilling order", session);
   return app
     .firestore()
-    .collection("user")
+    .collection("users")
     .doc(session.metadata.email)
     .collection("orders")
     .doc(session.id)
     .set({
+      id: session.id,
       amount: session.amount_total / 100,
       amount_shipping: session.total_details.amount_shipping / 100,
       images: JSON.parse(session.metadata.images),
@@ -46,17 +47,6 @@ export default async (req: any, res: any) => {
       console.log(`Webhook signature verification failed.`, err.message);
       return req.sendStatus(400);
     }
-
-    // switch (event.type) {
-    //   case "checkout.session.completed":
-    //     const session = event.data.object;
-    //     fulfillOrder(session)
-    //       .then(() => res.status(200))
-    //       .catch((err) => res.status(400).send(`Webhook Error: ${err.message}`));
-    //     break;
-    //   default:
-    //     console.log(`Unhandled event type ${event.type}.`);
-    // }
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
