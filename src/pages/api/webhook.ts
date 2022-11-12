@@ -28,9 +28,9 @@ const fulfillOrder = async (session: any) => {
       images: JSON.parse(session.metadata.images),
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
     })
-    .then(() => {
-      console.log(`SUCCESS: Order ${session.id} had been added to the DB`);
-    });
+    // .then(() => {
+    //   console.log(`SUCCESS: Order ${session.id} had been added to the DB`);
+    // });
 };
 
 export default async (req: any, res: any) => {
@@ -44,7 +44,7 @@ export default async (req: any, res: any) => {
     try {
       event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
     } catch (err: any) {
-      console.log(`Webhook signature verification failed.`, err.message);
+      // console.log(`Webhook signature verification failed.`, err.message);
       return req.sendStatus(400);
     }
 

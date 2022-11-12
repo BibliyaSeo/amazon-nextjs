@@ -17,7 +17,6 @@ export default function Checkout() {
 
   const createCheckoutSession = async () => {
     const stripe = await stripePromise;
-    // console.log(items);
     const checkoutSession = await axios.post("/api/create-checkout-session", {
       items: items,
       email: session?.user?.email,

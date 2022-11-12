@@ -6,4 +6,4 @@ Redux
 Firebase
 NextAuth
 
-Macbook 연결
+Firebase를 이용하여 구글 로그인 설정
